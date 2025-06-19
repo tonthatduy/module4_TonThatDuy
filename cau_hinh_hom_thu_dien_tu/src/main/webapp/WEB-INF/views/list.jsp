@@ -24,12 +24,12 @@
     <c:forEach items="${emailList}" var="email" varStatus="idx">
         <tr>
             <td>${idx.count}</td>
-            <td>${email.id}</td>
             <td>${email.language}</td>
             <td>${email.pageSize}</td>
             <td>${email.spamFiler}</td>
             <td>${email.signature}</td>
-            <td><a href="/edit?id=${email.id}">Edit</a></td>        </tr>
+            <td><a href="/edit?id=${email.id}">Edit</a></td>
+        </tr>
     </c:forEach>
 
 </table>

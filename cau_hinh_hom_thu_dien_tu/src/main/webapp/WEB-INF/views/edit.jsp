@@ -28,7 +28,7 @@
     </form:select> <br><br>
 
     <label>Spam Filter:</label>
-    <form:checkbox path="spamFilter"/> <br><br>
+    <form:checkbox path="spamFiler"/> <br><br>
 
     <label>Signature:</label>
     <form:input path="signature"/> <br><br>

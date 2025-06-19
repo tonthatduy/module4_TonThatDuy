@@ -17,7 +17,7 @@ public class EmailController {
     @Autowired
     private IEmailService emailService;
 
-    @GetMapping("/email")
+    @GetMapping("/edit")
     public String showEditForm(@RequestParam int id, Model model) {
         Email email = emailService.findById(id);
         model.addAttribute("email", email);
