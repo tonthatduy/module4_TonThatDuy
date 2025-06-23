@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,18 +42,13 @@ public class ProductController {
         return "/update";
     }
 
-    @PostMapping("/update")
-    public String update(Product product) {
-        productService.update(product.getId(), product);
-        return "redirect:/products";
-    }
-
     @PostMapping("/delete")
-    public String delete(Product product, RedirectAttributes redirect) {
-        productService.remove(product.getId());
+    public String delete(@RequestParam int id, RedirectAttributes redirect) {
+        productService.remove(id);
         redirect.addFlashAttribute("success", "Delete Product successfully!");
         return "redirect:/products";
     }
+
 
     @GetMapping("/{id}/view")
     public String view(@PathVariable int id, Model model) {
@@ -64,9 +58,9 @@ public class ProductController {
 
 
     @GetMapping("/search")
-    public String search(@RequestParam("keyword") String keyword, Model model){
+    public String search(@RequestParam("keyword") String keyword, Model model) {
         List<Product> productList = productService.searchByName(keyword);
-        model.addAttribute("products",productList);
+        model.addAttribute("products", productList);
         return "/index";
     }
 }
