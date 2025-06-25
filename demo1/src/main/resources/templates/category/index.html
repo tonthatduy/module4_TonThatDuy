@@ -141,7 +141,6 @@
             color: #2d3748;
         }
 
-
         @media (max-width: 768px) {
             .card-img-top {
                 height: 140px;
@@ -161,80 +160,28 @@
 <div class="container">
     <div class="card p-4">
         <div class="header-section d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-            <h3 class="mb-0">Blog App</h3>
+            <h3 class="mb-0">Category</h3>
             <div class="d-flex gap-2 align-items-center flex-wrap">
-                <form th:action="@{/blogs}" method="get">
-                    <input type="hidden" th:value="${searchName}" name="searchName">
-                    <input type="hidden" th:value="${createdAt}" name="sortDate">
-                    <input type="hidden" th:value="${searchCategory}" name="idCategory">
-                    <label style="font-weight: 500; color: #2d3748; align-items: center; gap: 4px; font-size: 0.95rem;">
-                        Số Blog
-                        <select name="size" onchange="this.form.submit()" class="form-select">
-                            <option th:each="item : ${sizeList}" th:value="${item}" th:text="${item}"
-                                    th:selected="${item == size}"></option>
-                        </select>
-                    </label>
-                </form>
-                <form class="d-flex gap-2" th:action="@{/blogs}" method="get">
-                    <label style="font-weight: 500; color: #2d3748; display: inline-flex; align-items: center; gap: 4px; font-size: 0.95rem;">
-                        <input type="radio" name="sortDate" value="true" th:checked="${createdAt == true}"
-                               style="margin-right: 4px; accent-color: #1a73e8;"> Giảm dần
-                    </label>
-                    <label style="font-weight: 500; color: #2d3748; display: inline-flex; align-items: center; gap: 4px; font-size: 0.95rem;">
-                        <input type="radio" name="sortDate" value="false" th:checked="${createdAt == false}"
-                               style="margin-right: 4px; accent-color: #1a73e8;"> Tăng dần
-                    </label>
-                    <select name="idCategory" class="form-select">
-                        <option value="0" th:selected="${searchCategory == 0}">-- Chọn Thể Loại --</option>
-                        <th:block th:each="c : ${categoryList}">
-                            <option th:value="${c.idCategory}" th:text="${c.nameCategory}"
-                                    th:selected="${c.idCategory == searchCategory}"></option>
-                        </th:block>
-                    </select>
-                    <input type="text" name="searchName" class="form-control form-control-sm"
-                           placeholder="Search by title"
-                           style="max-width: 200px;" th:value="${searchName}">
-                    <button type="submit" class="btn btn-sm btn-outline-primary">Search</button>
-                    <a class="btn btn-outline-secondary" th:href="@{/blogs}" role="button">Reset</a>
-                </form>
-
-                <a th:href="@{/blogs/add}" class="btn btn-sm btn-primary">Add New Blog</a>
-                <a th:href="@{/categorys}" class="btn btn-sm btn-primary">Go To Category</a>
+                <a th:href="@{/categorys/add}" class="btn btn-sm btn-primary">Add New Category</a>
             </div>
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <div class="col" th:each="row : ${blogList}">
+            <div class="col" th:each="row : ${categoryList}">
                 <div class="card h-100">
-                    <!--                    <img th:if="${row.imageUrl}" th:src="${row.imageUrl}" class="card-img-top" alt="Blog image">-->
-                    <a th:href="@{/blogs/{id}/view(id=${row.idBlog})}">
-                        <img src="https://www.whizlabs.com/blog/wp-content/uploads/2019/08/Introduction_to_Spring_Boot.png"
-                             class="card-img-top" alt="Placeholder image">
+                    <a th:href="@{/categorys/{id}/view(id=${row.idCategory})}">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${row.getTitle()}">Blog Title</h5>
-                        <p class="card-text">
-                            <strong>User:</strong> <span th:text="${row.getUser().getUsername()}"></span><br>
-                            <strong>Email:</strong> <span th:text="${row.getUser().getEmail()}"></span><br>
-                            <strong>Category:</strong> <span
-                                th:text="${row.getCategory().getNameCategory()}"></span><br>
-                            <strong>Created:</strong> <span
-                                th:text="${#temporals.format(row.getCreatedAt(), 'dd/MM/yyyy')}"></span><br>
-                            <strong>Updated:</strong> <span
-                                th:text="${#temporals.format(row.getUpdatedAt(), 'dd/MM/yyyy')}"></span><br>
-                            <strong>Published:</strong> <span th:text="${row.isPublished()} ? 'Yes' : 'No'"></span>
-                        </p>
+                        <h5 class="card-title" th:text="${row.getNameCategory()}">Name Category</h5>
                     </div>
                     <div class="card-footer">
-                        <a th:href="@{/blogs/{id}/view(id=${row.idBlog})}"
-                           class="btn btn-sm btn-outline-primary">View</a>
-                        <a th:href="@{/blogs/{id}/edit(id=${row.idBlog})}"
+                        <a th:href="@{/categorys/{id}/edit(id=${row.idCategory})}"
                            class="btn btn-sm btn-outline-secondary">Edit</a>
                         <button type="button"
                                 class="btn btn-sm btn-outline-danger"
                                 data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal"
-                                th:attr="data-id=${row.idBlog}, data-title=${row.title}">
+                                th:attr="data-id=${row.idCategory}, data-name=${row.nameCategory}">
                             Delete
                         </button>
                     </div>
@@ -246,40 +193,25 @@
                 <span th:text="${success}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            <div th:if="${fail}" class="alert alert-danger" role="alert">
+                <span th:text="${fail}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <a th:href="@{/blogs}" class="btn btn-sm btn-outline-danger">Back To Blog List</a>
         </div>
     </div>
 </div>
-<div class="d-flex justify-content-center mt-4">
-    <nav>
-        <ul class="pagination mb-0">
-            <li class="page-item" th:classappend="${!blogList.hasPrevious()} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{/blogs(page=${blogList.number -1},searchName=${searchName},idCategory=${searchCategory},size=${size})}">Trước</a>
-            </li>
-            <li class="page-item disabled">
-                <a class="page-link" href="#">
-                    <span th:text="${blogList.number +1}"></span> / <span th:text="${blogList.totalPages}"></span>
-                </a>
-            </li>
-            <li class="page-item" th:classappend="${!blogList.hasNext()} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{/blogs(page=${blogList.number +1},searchName=${searchName},idCategory=${searchCategory},size=${size})}">Sau</a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
 <footer th:replace="/layout/layout.html :: footer"></footer>
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog mt-5">
         <div class="modal-content">
-            <form id="deleteForm" th:action="@{/blogs/delete}" method="post">
+            <form id="deleteForm" th:action="@{/categorys/delete}" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Confirm Blog Deletion</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete the blog <strong id="blogTitle"></strong>?</p>
+                    <p>Are you sure you want to delete the blog <strong id="nameCategory"></strong>?</p>
                     <input type="hidden" name="id" id="deleteId"/>
                 </div>
                 <div class="modal-footer">
@@ -294,10 +226,10 @@
     const confirmDeleteModal = document.getElementById('confirmDeleteModal');
     confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget;
-        const blogId = button.getAttribute('data-id');
-        const blogTitle = button.getAttribute('data-title');
-        document.getElementById('blogTitle').textContent = blogTitle;
-        document.getElementById('deleteId').value = blogId;
+        const categoryId = button.getAttribute('data-id');
+        const nameCategory = button.getAttribute('data-name');
+        document.getElementById('nameCategory').textContent = nameCategory;
+        document.getElementById('deleteId').value = categoryId;
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

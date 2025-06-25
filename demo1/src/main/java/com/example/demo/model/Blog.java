@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,7 +21,9 @@ public class Blog {
     private Long idBlog;
     private String title;
     private String content;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedAt;
     private boolean published;
 
@@ -27,4 +31,7 @@ public class Blog {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

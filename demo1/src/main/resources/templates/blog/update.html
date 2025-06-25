@@ -8,37 +8,45 @@
             background-color: #f8f9fa;
             font-family: 'Segoe UI', Arial, sans-serif;
         }
+
         .container {
             max-width: 600px;
             margin-top: 2rem;
         }
+
         .card {
             border: none;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             padding: 2rem;
         }
+
         .form-label {
             font-weight: 500;
             color: #333;
         }
+
         .form-control {
             border-radius: 5px;
             margin-bottom: 1rem;
         }
+
         .btn-primary {
             border-radius: 5px;
             padding: 8px 20px;
         }
+
         .btn-secondary {
             border-radius: 5px;
             padding: 8px 20px;
         }
+
         .form-actions {
             display: flex;
             gap: 1rem;
             margin-top: 1.5rem;
         }
+
         h3 {
             color: #007bff;
             margin-bottom: 1.5rem;
@@ -56,15 +64,15 @@
 
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" id="title" th:field="*{title}" class="form-control" placeholder="Enter product name"/>
+                <input type="text" id="title" th:field="*{title}" class="form-control"
+                       placeholder="Enter product name"/>
             </div>
 
             <div class="mb-3">
                 <label for="content" class="form-label">Content</label>
-                <textarea id="content" th:field="*{content}" class="form-control" placeholder="Enter blog content" rows="5"></textarea>
+                <textarea id="content" th:field="*{content}" class="form-control" placeholder="Enter blog content"
+                          rows="5"></textarea>
             </div>
-
-
             <div class="mb-3">
                 <label for="user" class="form-label">User</label>
                 <select id="user" th:field="*{user}" class="form-control">
@@ -72,17 +80,30 @@
                             th:value="${u.idUser}"
                             th:text="${u.username}"></option>
                 </select>
-
             </div>
-
-
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select id="category" th:field="*{category}" class="form-control">
+                    <option th:each="c : ${categoryList}"
+                            th:value="${c.idCategory}"
+                            th:text="${c.nameCategory}"></option>
+                </select>
+            </div>
             <div class="mb-3">
                 <label for="createdAt" class="form-label">Created</label>
-                <input type="date" id="createdAt" th:field="*{createdAt}" class="form-control"/>
+                <input type="date" id="createdAt"
+                       th:field="*{createdAt}"
+                       th:value="*{createdAt != null} ? ${#temporals.format(blogs.createdAt, 'dd/MM/yyyy')} : ''"
+                       class="form-control"/>
+
             </div>
             <div class="mb-3">
                 <label for="updatedAt" class="form-label">Updated</label>
-                <input type="date" id="updatedAt" th:field="*{updatedAt}" class="form-control"/>
+                <input type="date" id="updatedAt"
+                       th:field="*{updatedAt}"
+                       th:value="*{updatedAt != null} ? ${#temporals.format(blogs.updatedAt, 'dd/MM/yyyy')} : ''"
+                       class="form-control"/>
+
             </div>
 
             <div class="mb-3 form-check">
