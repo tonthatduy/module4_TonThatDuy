@@ -46,36 +46,36 @@
 <body>
 <div class="container">
     <div class="card">
-        <h3>Blog Details</h3>
+        <h3 th:text="#{blog.detail.title}"></h3>
         <a th:href="@{/blogs}" class="btn btn-secondary mb-3">Back to Blog List</a>
 
         <div class="detail-item">
-            <label>Title:</label>
+            <label th:text="#{blog.detail.field.title}">Title:</label>
             <span th:text="${blog.title}"></span>
         </div>
         <div class="detail-item">
-            <label>Content:</label>
+            <label th:text="#{blog.detail.field.content}">Content:</label>
             <span th:text="${blog.content}"></span>
         </div>
         <div class="detail-item">
-            <label>Category:</label>
+            <label th:text="#{blog.detail.field.category}">Category:</label>
             <span th:text="${blog.category.nameCategory}"></span>
         </div>
         <div class="detail-item">
-            <label>Created:</label>
+            <label th:text="#{blog.detail.field.created}">Created:</label>
             <span th:text="${#temporals.format(blog.createdAt, 'dd/MM/yyyy')}"></span>
         </div>
         <div class="detail-item">
-            <label>Updated:</label>
+            <label th:text="#{blog.detail.field.updated}">Updated:</label>
             <span th:text="${#temporals.format(blog.updatedAt, 'dd/MM/yyyy')}"></span>
         </div>
         <div class="detail-item">
-            <label>Published:</label>
+            <label th:text="#{blog.detail.field.published}">Published:</label>
             <span th:text="${blog.published} ? 'Yes' : 'No'"></span>
         </div>
 
         <div class="detail-item">
-            <label>User:</label>
+            <label th:text="#{blog.detail.field.user}">User:</label>
             <span th:text="${blog.user.username} + ' (' + ${blog.user.email} + ')'"></span>
         </div>
 
